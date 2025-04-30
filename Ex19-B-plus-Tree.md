@@ -1,51 +1,53 @@
-# Ex4C B-Tree
-## DATE: 07/04/2025
+# Ex4D B+ Tree
+## DATE: 12/04/2025
 ## AIM:
-To write a C function to delete an element in a B Tree.
+To write a C function to traverse the elements in a B+ Tree.
+
 ## Algorithm
 1. Start
-2. Try to delete the item from the node using delValFromNode. If not found, print "Not
-present" and return.
-3. If the node's count is 0 after deletion, set tmp to the current node and update myNode to its
-first linker child.
-4. Free the tmp node.
-5. Update the global root to the new myNode.
-6. Return after deletion.
+2. Iterate through each element in the node's data array.
+3. If the node is not a leaf, recursively call traverse on the current child pointer.
+4. Print the current data element.
+5. After the loop, if the node is not a leaf, traverse the last child pointer.
+6. Return after completing the traversal.
 7. End
-
 ## Program:
 ```
 /*
-Program to write a C function to delete an element in a B Tree
-Developed by: K.ABHINESWAR REDDY
-RegisterNumber:  212223040084
+Program to traverse the elements in a B+ Tree.
+Developed by: Varadaram SK
+RegisterNumber:  212223040232
 */
-structBTreeNode{
-int item[MAX+1], count;
-structBTreeNode*linker[MAX +1];
+struct B_TreeNode
+{
+int *data;
+structB_TreeNode**child_ptr;
+int leaf;
+int n;
 };
-structBTreeNode*root;*/
-void delete(int item,structBTreeNode*myNode) {
-structBTreeNode*tmp;
-if(!delValFromNode(item,myNode)) {
-printf("Not present\n");
-return;
-} else {
-if(myNode->count ==0) {
-tmp = myNode;
-myNode=myNode->linker[0];
-free(tmp);
+structB_TreeNode*root =NULL, *np=NULL, *x=NULL;*/
+void traverse(structB_TreeNode*p)
+{
+int i;
+for(i=0;i<p->n;i++)
+{
+if(p->leaf==0)
+{
+traverse(p->child_ptr[i]);
 }
+printf("%d",p->data[i]);
 }
-root=myNode;
-return;
+if(p->leaf==0)
+{
+traverse(p->child_ptr[i]);
+}
 }
 ```
 
 ## Output:
+![image](https://github.com/user-attachments/assets/fced9543-d793-4ea1-a964-f95dba5ca6b9)
 
-![image](https://github.com/user-attachments/assets/8b7859f6-b318-4ace-b478-007083227b39)
 
 
 ## Result:
-Thus, the C function to delete an element in a B Tree is implemented successfully.
+Thus, the function to traverse the elements in a B+ Tree is implemented successfully.
